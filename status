@@ -1,0 +1,23 @@
+    // Fetch Minecraft Bedrock server status
+        function fetchServerStatus() {
+            const apiUrl = 'https://api.mcstatus.io/v2/status/bedrock/gbabspe.sytes.net:26403';
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const serverStatusElement = document.getElementById('server-status');
+
+                    if (data.online) {
+                        serverStatusElement.innerText = `Server is Online! Players: ${data.players.online}/${data.players.max}`;
+                    } else {
+                        serverStatusElement.innerText = "Server is Offline.";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching server status:', error);
+                    document.getElementById('server-status').innerText = "Error checking server status.";
+                });
+        }
+
+        // Call the function when the page loads
+        window.onload = fetchServerStatus;
